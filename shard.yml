@@ -1,0 +1,11 @@
+name: simple_ssh
+version: 0.1.0
+description: Simple stateless SSH communication
+
+authors:
+  - GrottoPress <info@grottopress.com>
+  - N Atta Kusi Adusei
+
+license: MIT
+
+crystal: ~> 1.0

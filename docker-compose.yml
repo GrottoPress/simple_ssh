@@ -1,0 +1,35 @@
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.202.0/24"
+services:
+  app: &crystal
+    build:
+      context: .
+      dockerfile: ./docker/crystal.Dockerfile
+    depends_on:
+      - box
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+  shards:
+    <<: *crystal
+    command: 'sh -c "shards update"'
+    depends_on: []
+    environment: {}
+  spec:
+    <<: *crystal
+    command: 'sh -c "crystal spec"'
+  box:
+    build:
+      context: .
+      dockerfile: ./docker/ssh.Dockerfile
+    environment:
+      SSH_ENABLE_ROOT: "true"
+    networks:
+      default:
+        ipv4_address: "192.168.202.254"
+version: "2.4"
