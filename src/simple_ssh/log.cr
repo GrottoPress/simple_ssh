@@ -1,6 +1,6 @@
 require "log"
 
-struct SimpleSsh
+class SimpleSsh
   def self.log
     @@log ||= Log.for(self)
   end

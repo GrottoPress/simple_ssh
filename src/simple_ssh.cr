@@ -3,7 +3,7 @@ require "socket"
 require "./simple_ssh/version"
 require "./simple_ssh/**"
 
-struct SimpleSsh
+class SimpleSsh
   getter :user, :host, :port
 
   def initialize(@user : String, @host : String, @port = 22)
@@ -24,7 +24,7 @@ struct SimpleSsh
     command(command)
   end
 
-  def command(command : String) : Nil
+  def command(command : String)
     @commands << command
 
     random = `echo ${RANDOM}`
@@ -44,6 +44,8 @@ struct SimpleSsh
     @buffer << "echo ${simplessh_output}"
     @buffer << echo_separator
     @buffer << "echo ${simplessh_error}"
+
+    self
   end
 
   def run

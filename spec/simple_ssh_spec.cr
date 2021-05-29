@@ -5,8 +5,7 @@ describe SimpleSsh do
     it "pipelines multiple commands" do
       ssh = SimpleSsh.new(**BOX)
 
-      ssh << "ls /root"
-      ssh << "cat /non-existent"
+      ssh << "ls /root" << "cat /non-existent"
 
       ssh.run do |responses|
         responses.size.should eq(2)

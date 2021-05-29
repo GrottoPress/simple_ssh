@@ -1,3 +1,3 @@
-struct SimpleSsh
+class SimpleSsh
   VERSION = {{ `shards version "#{__DIR__}"`.chomp.stringify }}
 end
