@@ -39,11 +39,11 @@ class SimpleSsh
     @buffer << "simplessh_error=$(cat #{stderr} 2>#{devnull})"
     @buffer << "rm #{stderr} 2>#{devnull} 1>#{devnull}"
 
-    @buffer << "echo ${simplessh_status}"
+    @buffer << "echo -n ${simplessh_status}"
     @buffer << echo_separator
-    @buffer << "echo ${simplessh_output}"
+    @buffer << %[echo -n "${simplessh_output}"]
     @buffer << echo_separator
-    @buffer << "echo ${simplessh_error}"
+    @buffer << %[echo -n "${simplessh_error}"]
 
     self
   end
@@ -121,6 +121,6 @@ class SimpleSsh
   end
 
   private def echo_separator
-    "echo '#{@separator}'"
+    "echo -n '#{@separator}'"
   end
 end

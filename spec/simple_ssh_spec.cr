@@ -14,6 +14,20 @@ describe SimpleSsh do
         responses[1].error.should_not be_nil
       end
     end
+
+    it "retains whitespace in output" do
+      ssh = SimpleSsh.new(**BOX)
+      file = "file.txt"
+
+      ssh << "echo '  abcdef ' > #{file}"
+      ssh << "echo ' ghi jkl' >> #{file}"
+      ssh.run.each &.status.success?.should be_true
+
+      ssh.run("cat #{file}") do |response|
+        response.status.success?.should be_true
+        response.output.should eq("  abcdef \n ghi jkl")
+      end
+    end
   end
 
   describe "#run" do

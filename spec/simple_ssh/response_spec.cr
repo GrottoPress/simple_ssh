@@ -37,18 +37,6 @@ describe SimpleSsh::Response do
     response.error.should eq(error)
   end
 
-  it "strips whitespace" do
-    status = " \n1 \n"
-    output = "\n output\n "
-    error = "\n error \n"
-
-    response = SimpleSsh::Response.new(status, output, error)
-
-    response.status.exit_status.should eq(1)
-    response.output.should eq("output")
-    response.error.should eq("error")
-  end
-
   it "returns 'nil' for empty strings" do
     response = SimpleSsh::Response.new(1, "\n ", " \n")
 
