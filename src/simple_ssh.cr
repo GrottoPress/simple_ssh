@@ -27,10 +27,10 @@ class SimpleSsh
   def command(command : String)
     @commands << command
 
-    random = `echo ${RANDOM}`
-    timestamp = `date +"%s"`
+    random = `echo ${RANDOM}`.strip
+    timestamp = `date +"%s"`.strip
 
-    stderr = "/tmp/simplessh-stderr-#{timestamp.strip}-#{random.strip}.txt"
+    stderr = "/tmp/simplessh-stderr-#{timestamp}-#{random}.txt"
     devnull = "/dev/null"
 
     @buffer << echo_separator
