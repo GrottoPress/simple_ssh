@@ -8,5 +8,8 @@ services:
 install:
   - docker-compose run --rm shards
 
+before_script:
+  - docker-compose run --rm check
+
 script:
   - docker-compose run --rm spec

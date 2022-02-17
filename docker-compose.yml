@@ -15,6 +15,9 @@ services:
     volumes:
       - .:/var/www/html
     working_dir: /var/www/html
+  check:
+    <<: *crystal
+    command: 'sh -c "./bin/ameba"'
   shards:
     <<: *crystal
     command: 'sh -c "shards update"'
