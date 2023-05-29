@@ -4,7 +4,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: "192.168.202.0/24"
+        - subnet: 192.168.202.0/24
 services:
   app: &crystal
     build:
@@ -17,22 +17,22 @@ services:
     working_dir: /var/www/html
   check:
     <<: *crystal
-    command: 'sh -c "./bin/ameba"'
+    command: sh -c "./bin/ameba"
   shards:
     <<: *crystal
-    command: 'sh -c "shards update"'
+    command: sh -c "shards update"
     depends_on: []
     environment: {}
   spec:
     <<: *crystal
-    command: 'sh -c "crystal spec"'
+    command: sh -c "crystal spec"
   box:
     build:
       context: .
       dockerfile: ./docker/ssh.Dockerfile
     environment:
-      SSH_ENABLE_ROOT: "true"
+      SSH_ENABLE_ROOT: 'true'
     networks:
       default:
-        ipv4_address: "192.168.202.254"
-version: "2.4"
+        ipv4_address: '192.168.202.254'
+version: '2.4'
