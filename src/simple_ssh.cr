@@ -27,11 +27,8 @@ class SimpleSsh
   def command(command : String)
     @commands << command
 
-    random = `echo ${RANDOM}`.strip
-    timestamp = `date +"%s"`.strip
-
-    stderr = "/tmp/simplessh-stderr-#{timestamp}-#{random}.txt"
-    devnull = "/dev/null"
+    stderr = File.tempfile("simplessh-stderr", ".txt").path
+    devnull = File::NULL
 
     @buffer << echo_separator
     @buffer << "simplessh_output=$(#{command} 2>#{stderr})"
@@ -56,10 +53,13 @@ class SimpleSsh
     add_host
     @buffer << echo_separator
 
-    output = `ssh -Tp #{port} '#{user}'@'#{host}' <<'SSH'\n\
-    #{@buffer.join("; ")}\n\
-    SSH`
+    command = <<-BASH
+      ssh -Tp #{port} '#{user}'@'#{host}' <<'SSH'
+      #{@buffer.join("; ")}
+      SSH
+      BASH
 
+    output = `#{command}`
     responses = responses(output, $?)
 
     responses.each_with_index do |response, i|
