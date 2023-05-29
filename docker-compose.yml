@@ -25,7 +25,7 @@ services:
     environment: {}
   spec:
     <<: *crystal
-    command: sh -c "crystal spec"
+    command: sh -c "crystal spec -p"
   box:
     build:
       context: .
