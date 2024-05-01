@@ -46,7 +46,7 @@ class SimpleSsh
   end
 
   def run
-    run { |responses| responses }
+    run(&.itself)
   end
 
   def run
@@ -72,7 +72,7 @@ class SimpleSsh
   end
 
   def run(command : String) : Response
-    run(command) { |response| response }
+    run(command, &.itself)
   end
 
   def run(command : String)

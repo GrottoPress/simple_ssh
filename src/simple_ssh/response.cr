@@ -17,7 +17,6 @@ struct SimpleSsh::Response
   end
 
   private def nil_if_empty(string)
-    stripped = string.try(&.strip)
-    stripped.try(&.empty?.!) ? string : nil
+    string.presence ? string : nil
   end
 end
